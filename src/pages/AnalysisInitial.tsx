@@ -1,11 +1,18 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BarChart3, PieChart as PieChartIcon, Table as TableIcon, TrendingUp } from "lucide-react";
+import { BarChart3, PieChart as PieChartIcon, Table as TableIcon, TrendingUp, X } from "lucide-react";
+import { useState } from "react";
 
 const AnalysisInitial = () => {
+  const [chartModal, setChartModal] = useState<{ isOpen: boolean; type: 'bar' | 'pie' | null }>({
+    isOpen: false,
+    type: null
+  });
+
   // Sample data for demonstration
   const sectorData = [
     { name: 'Pertanian', value: 25.5, output: 125000 },
@@ -84,10 +91,10 @@ const AnalysisInitial = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Bar Chart */}
-          <Card className="shadow-lg">
+          <Card className="shadow-lg cursor-pointer transition-transform hover:scale-105" onClick={() => setChartModal({ isOpen: true, type: 'bar' })}>
             <CardHeader>
               <CardTitle>Output per Sektor</CardTitle>
-              <CardDescription>Distribusi output ekonomi berdasarkan sektor</CardDescription>
+              <CardDescription>Distribusi output ekonomi berdasarkan sektor (Klik untuk memperbesar)</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -103,10 +110,10 @@ const AnalysisInitial = () => {
           </Card>
 
           {/* Pie Chart */}
-          <Card className="shadow-lg">
+          <Card className="shadow-lg cursor-pointer transition-transform hover:scale-105" onClick={() => setChartModal({ isOpen: true, type: 'pie' })}>
             <CardHeader>
               <CardTitle>Komposisi Ekonomi</CardTitle>
-              <CardDescription>Persentase kontribusi setiap sektor</CardDescription>
+              <CardDescription>Persentase kontribusi setiap sektor (Klik untuk memperbesar)</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -172,6 +179,77 @@ const AnalysisInitial = () => {
           </Button>
         </div>
       </div>
+
+      {/* Chart Modal */}
+      <Dialog open={chartModal.isOpen} onOpenChange={(open) => setChartModal({ isOpen: open, type: null })}>
+        <DialogContent className="max-w-6xl w-full h-[90vh] max-h-screen p-0">
+          <div className="relative h-full flex flex-col">
+            <button 
+              onClick={() => setChartModal({ isOpen: false, type: null })}
+              className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+            >
+              <X className="h-5 w-5 text-gray-600" />
+            </button>
+            
+            <DialogHeader className="p-6 pb-0">
+              <DialogTitle className="text-2xl">
+                {chartModal.type === 'bar' ? 'Output per Sektor' : 'Komposisi Ekonomi'}
+              </DialogTitle>
+            </DialogHeader>
+
+            <div className="flex-1 p-6 pt-4">
+              {chartModal.type === 'bar' && (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={sectorData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" fontSize={14} />
+                    <YAxis fontSize={14} />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #ccc',
+                        borderRadius: '8px',
+                        fontSize: '14px'
+                      }}
+                    />
+                    <Bar dataKey="output" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+
+              {chartModal.type === 'pie' && (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={sectorData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, value }) => `${name}: ${value}%`}
+                      outerRadius={150}
+                      fill="#8884d8"
+                      dataKey="value"
+                      fontSize={14}
+                    >
+                      {sectorData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white', 
+                        border: '1px solid #ccc',
+                        borderRadius: '8px',
+                        fontSize: '14px'
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
