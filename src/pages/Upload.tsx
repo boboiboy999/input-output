@@ -45,13 +45,13 @@ const Upload = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Upload Tabel Input-Output</h1>
           <p className="text-gray-600">Unggah file tabel input-output untuk memulai analisis</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Upload Section */}
           <Card className="shadow-lg">
             <CardHeader>
@@ -133,6 +133,43 @@ const Upload = () => {
               <div className="bg-yellow-50 p-3 rounded-lg">
                 <p className="text-sm text-yellow-800">
                   <strong>Tips:</strong> Pastikan tabel input-output sudah dalam format yang benar sebelum upload untuk hasil analisis yang optimal.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Example Format Section */}
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <FileSpreadsheet className="h-5 w-5" />
+                <span>Contoh Format Tabel</span>
+              </CardTitle>
+              <CardDescription>
+                Contoh tampilan tabel input-output yang benar
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-gray-50 rounded-lg p-4">
+                <img 
+                  src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop" 
+                  alt="Contoh format tabel input-output"
+                  className="w-full h-48 object-cover rounded-md"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="font-medium text-gray-900">Struktur Tabel</h4>
+                <div className="text-sm text-gray-600 space-y-1">
+                  <p>• Header baris dan kolom berisi nama sektor</p>
+                  <p>• Nilai koefisien teknis di interseksi</p>
+                  <p>• Format numerik yang konsisten</p>
+                </div>
+              </div>
+              
+              <div className="bg-blue-50 p-3 rounded-lg">
+                <p className="text-sm text-blue-800">
+                  <strong>Catatan:</strong> Pastikan struktur tabel sesuai dengan contoh di atas untuk hasil analisis yang akurat.
                 </p>
               </div>
             </CardContent>
