@@ -92,9 +92,27 @@ const AnalysisFinal = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Analisis Akhir</h1>
-          <p className="text-gray-600">Ringkasan komprehensif dan rekomendasi kebijakan</p>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Beranda
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Analisis Akhir</h1>
+              <p className="text-gray-600">Ringkasan komprehensif dan rekomendasi kebijakan</p>
+            </div>
+          </div>
+          <div className="flex space-x-2">
+            <Button variant="outline" size="sm" onClick={downloadReport}>
+              <Download className="h-4 w-4 mr-2" />
+              Download Laporan
+            </Button>
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+              <FileText className="h-4 w-4 mr-2" />
+              Buat Analisis Baru
+            </Button>
+          </div>
         </div>
 
         {/* Executive Summary */}
@@ -223,19 +241,11 @@ const AnalysisFinal = () => {
           </CardContent>
         </Card>
 
-        {/* Action Buttons */}
+        {/* Secondary Action Buttons */}
         <div className="flex justify-center space-x-4 mb-8">
-          <Button variant="outline" size="lg" onClick={downloadReport}>
-            <Download className="h-4 w-4 mr-2" />
-            Download Laporan
-          </Button>
           <Button variant="outline" size="lg" onClick={shareReport}>
             <Share2 className="h-4 w-4 mr-2" />
             Bagikan Laporan
-          </Button>
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-            <FileText className="h-4 w-4 mr-2" />
-            Buat Analisis Baru
           </Button>
         </div>
 

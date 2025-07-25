@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload as UploadIcon, FileSpreadsheet, CheckCircle, AlertCircle } from "lucide-react";
+import { Upload as UploadIcon, FileSpreadsheet, CheckCircle, AlertCircle, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Upload = () => {
@@ -46,9 +46,22 @@ const Upload = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Upload Tabel Input-Output</h1>
-          <p className="text-gray-600">Unggah file tabel input-output untuk memulai analisis</p>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Beranda
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Upload Tabel Input-Output</h1>
+              <p className="text-gray-600">Unggah file tabel input-output untuk memulai analisis</p>
+            </div>
+          </div>
+          {uploadComplete && (
+            <Button size="lg" className="bg-green-600 hover:bg-green-700">
+              Lanjut ke Analisis Awal
+            </Button>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -176,13 +189,6 @@ const Upload = () => {
           </Card>
         </div>
 
-        {uploadComplete && (
-          <div className="mt-8 text-center">
-            <Button size="lg" className="bg-green-600 hover:bg-green-700">
-              Lanjut ke Analisis Awal
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );

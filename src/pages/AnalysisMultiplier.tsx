@@ -40,9 +40,20 @@ const AnalysisMultiplier = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Analisis Multiplier</h1>
-          <p className="text-gray-600">Analisis mendalam efek multiplier ekonomi</p>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Beranda
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Analisis Multiplier</h1>
+              <p className="text-gray-600">Analisis mendalam efek multiplier ekonomi</p>
+            </div>
+          </div>
+          <Button size="lg" className="bg-orange-600 hover:bg-orange-700">
+            Lanjut ke Analisis Shock
+          </Button>
         </div>
 
         {/* Control Panel */}
@@ -206,12 +217,9 @@ const AnalysisMultiplier = () => {
         </Card>
 
         {/* Action Buttons */}
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center">
           <Button variant="outline" size="lg">
             Kembali ke Analisis Awal
-          </Button>
-          <Button size="lg" className="bg-orange-600 hover:bg-orange-700">
-            Lanjut ke Analisis Shock
           </Button>
         </div>
       </div>

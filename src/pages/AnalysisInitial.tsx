@@ -69,9 +69,20 @@ const AnalysisInitial = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Analisis & Visualisasi Awal</h1>
-          <p className="text-gray-600">Overview data tabel input-output dan statistik dasar</p>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Beranda
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Analisis & Visualisasi Awal</h1>
+              <p className="text-gray-600">Overview data tabel input-output dan statistik dasar</p>
+            </div>
+          </div>
+          <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
+            Lanjut ke Analisis Multiplier
+          </Button>
         </div>
 
         {/* Key Statistics */}
@@ -230,12 +241,9 @@ const AnalysisInitial = () => {
         </Card>
 
         {/* Action Buttons */}
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center">
           <Button variant="outline" size="lg">
             Kembali ke Upload
-          </Button>
-          <Button size="lg" className="bg-green-600 hover:bg-green-700">
-            Lanjut ke Analisis Multiplier
           </Button>
         </div>
       </div>
