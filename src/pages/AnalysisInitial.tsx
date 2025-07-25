@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BarChart3, PieChart as PieChartIcon, Table as TableIcon, TrendingUp, X } from "lucide-react";
+import { BarChart3, PieChart as PieChartIcon, Table as TableIcon, TrendingUp, X, ChevronUp, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const AnalysisInitial = () => {
@@ -12,6 +12,11 @@ const AnalysisInitial = () => {
     isOpen: false,
     type: null
   });
+
+  const [sortConfig, setSortConfig] = useState<{
+    key: 'direct' | 'indirect' | 'total' | null;
+    direction: 'ascending' | 'descending';
+  }>({ key: null, direction: 'ascending' });
 
   // Sample data for demonstration
   const sectorData = [
@@ -29,6 +34,37 @@ const AnalysisInitial = () => {
   ];
 
   const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'];
+
+  // Sorting function
+  const handleSort = (key: 'direct' | 'indirect' | 'total') => {
+    let direction: 'ascending' | 'descending' = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  // Sort the multiplier data
+  const sortedMultiplierData = [...multiplierData].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+    
+    const aVal = a[sortConfig.key];
+    const bVal = b[sortConfig.key];
+    
+    if (sortConfig.direction === 'ascending') {
+      return aVal - bVal;
+    } else {
+      return bVal - aVal;
+    }
+  });
+
+  // Get sort icon
+  const getSortIcon = (key: 'direct' | 'indirect' | 'total') => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === 'ascending' ? 
+      <ChevronUp className="h-4 w-4" /> : 
+      <ChevronDown className="h-4 w-4" />;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
@@ -150,13 +186,37 @@ const AnalysisInitial = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Sektor</TableHead>
-                  <TableHead>Direct Effect</TableHead>
-                  <TableHead>Indirect Effect</TableHead>
-                  <TableHead>Total Effect</TableHead>
+                  <TableHead 
+                    className="cursor-pointer hover:bg-gray-50 select-none"
+                    onClick={() => handleSort('direct')}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>Direct Effect</span>
+                      {getSortIcon('direct')}
+                    </div>
+                  </TableHead>
+                  <TableHead 
+                    className="cursor-pointer hover:bg-gray-50 select-none"
+                    onClick={() => handleSort('indirect')}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>Indirect Effect</span>
+                      {getSortIcon('indirect')}
+                    </div>
+                  </TableHead>
+                  <TableHead 
+                    className="cursor-pointer hover:bg-gray-50 select-none"
+                    onClick={() => handleSort('total')}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>Total Effect</span>
+                      {getSortIcon('total')}
+                    </div>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {multiplierData.map((row, index) => (
+                {sortedMultiplierData.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell className="font-medium">{row.sector}</TableCell>
                     <TableCell>{row.direct}</TableCell>
